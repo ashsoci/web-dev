@@ -9,11 +9,11 @@ app.use(express.static('public'));
 //add a callback function to handle 
 //get request on the root
 app.get('/', function(req, res) {  
-    res.sendFile(path.join(__dirname+'/html/index.html'));
+    res.sendFile(path.join(__dirname+'/html/home.html'));
 });
 
-app.get('/about', function(req, res) {  
-    res.sendFile(path.join(__dirname+'/html/about.html'));
+app.get('/admin', function(req, res) {  
+    res.sendFile(path.join(__dirname+'/html/admin.html'));
 });
 
 var port = process.env.PORT || 3000;
