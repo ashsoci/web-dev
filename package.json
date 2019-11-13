@@ -1,0 +1,19 @@
+{
+  "name": "cgwebserver",
+  "version": "1.0.0",
+  "description": "Cubic Games Website",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.coventry.ac.uk/ab8505/CGWebServer.git"
+  },
+  "author": "Mahmoud Awad",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {}
+}
