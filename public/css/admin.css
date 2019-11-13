@@ -1,0 +1,27 @@
+div.admin-link {
+    background-color:grey;
+    height: 15%;
+    text-align: center;
+    border-style: solid;
+    border-width: 1px;
+}
+
+#admin-active {
+    background-color: white;
+}
+
+div.admin-link a{
+    margin: 0;
+    position: relative;
+    top: 40%;
+}
+
+div.nbar {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 16.66%;
+    background-color: grey;
+}
+
+html,body { height:100%;}
