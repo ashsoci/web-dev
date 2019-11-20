@@ -16,6 +16,10 @@ app.get('/admin', function(req, res) {
     res.sendFile(path.join(__dirname+'/html/admin.html'));
 });
 
+app.get('/products', function(req, res) {  
+    res.sendFile(path.join(__dirname+'/html/products.html'));
+});
+
 var port = process.env.PORT || 3000;
 
 //run the server on port 3000
