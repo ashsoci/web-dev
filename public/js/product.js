@@ -1,7 +1,9 @@
-function handler(ev) {
-var target = $(ev.target);
-if( target.is("img.prod") ) {
-   alert('The mouse was over' );
-}
-}
-$("img.prod").mouseleave(handler);
+$( "img.center.prod" )
+  .mouseenter(function() {
+    //n += 1;
+    //$( this ).find( "span" ).text( "mouse enter x " + n );
+	alert("Entered");
+  })
+  .mouseleave(function() {
+    //$( this ).find( "span" ).text( "mouse leave" );
+  });
