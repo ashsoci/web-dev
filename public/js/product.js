@@ -1,7 +1,7 @@
 function handler(ev) {
 var target = $(ev.target);
-if( target.is(".prod") ) {
+if( target.is("img.prod") ) {
    alert('The mouse was over' );
 }
 }
-$(".prod").mouseleave(handler);
+$("img.prod").mouseleave(handler);
