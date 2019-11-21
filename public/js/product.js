@@ -8,8 +8,8 @@ $( ".prod" )
     //$( this ).find( "span" ).text( "mouse leave" );
   });
   
-$(function() {
+/*$(function() {
 	$(document).on('mouseover', '.prod', function(event) {
 		alert("Entered");
     });
-});
+});*/
