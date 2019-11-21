@@ -7,3 +7,9 @@ div.product {
 	border-style: solid;
 	border-width: 5px;
 }
+
+img.prod {
+	border-radius: 8px;
+	max-width: 100%;
+	height: auto;
+}
