@@ -9,7 +9,7 @@ $( ".prod" )
   });
   
 $(function() {
-	$(document).on('mouseenter', '.prod', function(event) {
+	$(document).on('mouseover', '.prod', function(event) {
 		alert("Entered");
     });
 });
