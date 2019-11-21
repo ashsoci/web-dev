@@ -7,9 +7,3 @@ $( ".prod" )
   .mouseleave(function() {
     //$( this ).find( "span" ).text( "mouse leave" );
   });
-  
-/*$(function() {
-	$(document).on('mouseover', '.prod', function(event) {
-		alert("Entered");
-    });
-});*/
