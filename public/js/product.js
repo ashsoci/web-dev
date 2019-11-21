@@ -1,4 +1,4 @@
-$( "img.center.prod" )
+$( ".img" )
   .mouseenter(function() {
     //n += 1;
     //$( this ).find( "span" ).text( "mouse enter x " + n );
