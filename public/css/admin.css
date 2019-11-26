@@ -22,6 +22,7 @@ div.nbar {
     height: 100%;
     width: 16.66%;
     background-color: grey;
+	position:absolute;
 }
 
 html,body { height:100%;}

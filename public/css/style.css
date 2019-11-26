@@ -2,6 +2,20 @@
     text-align: center;
 }
 
+#gametitle {
+	position: absolute;
+	text-align: right;
+	z-index: 1;
+	top: 50%;
+	left: 80%;
+	transform: translate(-50%, -80%);
+	width: calc(50% + 2.5vw);
+}
+
+#test {
+	background-image: linear-gradient(to bottom, transparent 0%, white 100%);
+}
+
 div.product {
 	padding: 10px;
 }
@@ -32,4 +46,15 @@ img.prod {
   font-size: 24px;
   font-size: calc(100% * 3.5vw);
   z-index: -1;
+}
+
+.carousel-control-next,
+.carousel-control-prev {
+    filter: invert(100%);
+}
+
+.os-fa {
+	vertical-align: middle;
+	line-height: 1.5em;
+	padding-right: 10px
 }
