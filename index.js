@@ -77,6 +77,18 @@ app.get('/products', async function(req, res) {
 	})
 });
 
+app.get('/product', function(req, res) {  
+    //res.sendFile(path.join(__dirname+'/html/admin.ejs'));
+	
+	let data = {
+		
+	}
+	
+	ejs.renderFile('./html/product.ejs', data, null, function(err, str){
+		res.send(str);
+	})
+});
+
 var getProducts = new Promise(function(resolve, reject){
 	setTimeout(function() {
 		//resolve('foo');
