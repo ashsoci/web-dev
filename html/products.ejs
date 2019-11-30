@@ -40,7 +40,9 @@
             <div class="row">
 			<br><br>
                 <% products.forEach(function(product){ %>
-					<%- include('product-listing', product); %>
+					<%if(product.published == 1) { %>
+						<%- include('product-listing', product); %>
+					<% } %>
 				<% }); %>
             </div>
         </div>

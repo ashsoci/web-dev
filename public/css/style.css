@@ -48,10 +48,15 @@ img.prod {
   z-index: -1;
 }
 
-.carousel-control-next,
-.carousel-control-prev {
-    filter: invert(100%);
+body {
+	background-color: 
 }
+
+.car-item {
+	width:100%; 
+	height: calc(50% + 2.5vw) !important;
+}
+
 
 .os-fa {
 	vertical-align: middle;

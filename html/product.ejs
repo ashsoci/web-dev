@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 	<header>
-		<title>[Product Name]</title>
+		<title><%= prod.title %></title>
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-		<link rel="stylesheet" href="./css/style.css">
+		<link rel="stylesheet" href="../css/style.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
@@ -23,7 +23,7 @@
 					<a class="nav-link" href="#">About Us</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="products">Products</a>
+					<a class="nav-link" href="../products">Products</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="#">Contact Us</a>
@@ -32,7 +32,7 @@
 			
 			<ul class="navbar-nav">
 				<li class="nav-item ">
-					<a class="nav-link" href="admin">Admin</a> 
+					<a class="nav-link" href="../admin">Admin</a> 
 				</li>
 			</ul>
 		</nav>
@@ -45,14 +45,14 @@
 				</div>
 			
 			<div class="col-md-12 p-0">
-				<img id="test" class="img-fluid w-100" src="./images/eu4-title-banner2.jpg"> 	<!–– Need to change to set image of the product page ––>
+				<img id="test" class="img-fluid w-100" src=<%= prod.productBanner %>> 	<!–– Need to change to set image of the product page ––>
 			</div>
 		  </div>
 		</div>
 		
 		<div class="container">
 			<div class="row">
-				<h2>Europa Universalis 4</h2>
+				<h2><%= prod.title %></h2>
 			</div>
 			<div id="demo" class="carousel slide" data-ride="carousel" style="padding:20px;">
 				<!-- Indicators -->
@@ -60,18 +60,26 @@
 					<li data-target="#demo" data-slide-to="0" class="active"></li>
 					<li data-target="#demo" data-slide-to="1"></li>
 					<li data-target="#demo" data-slide-to="2"></li>
+					<li data-target="#demo" data-slide-to="3"></li>
+					<li data-target="#demo" data-slide-to="4"></li>
 				</ul>
 
 				<!-- The slideshow -->
 				<div class="carousel-inner">
 					<div class="carousel-item active">
-						<img class="d-block mx-auto" src="./images/test.jpg" alt="Los Angeles">
+						<img class="d-block mx-auto car-item" src=<%= prod.productSlide1 %>>
 					</div>
 					<div class="carousel-item">
-						<img class="d-block mx-auto" src="./images/test.jpg" alt="Chicago">
+						<img class="d-block mx-auto car-item" src=<%= prod.productSlide2 %>>
 					</div>
 					<div class="carousel-item">
-						<img class="d-block mx-auto" src="./images/test.jpg" alt="New York">
+						<img class="d-block mx-auto car-item" src=<%= prod.productSlide3 %>>
+					</div>
+					<div class="carousel-item">
+						<img class="d-block mx-auto car-item" src=<%= prod.productSlide4 %>>
+					</div>
+					<div class="carousel-item">
+						<img class="d-block mx-auto car-item" src=<%= prod.productSlide5 %>>
 					</div>
 				</div>
 
@@ -85,24 +93,24 @@
 
 			</div>
 			<div class="row">
-				<h5>Feature 1</h5>
+				<h5><%= prod.productHeader1 %></h5>
 			</div>
 			<div class="row">
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-			</div>
-			
-			<div class="row">
-				<h5>Feature 2</h5>
-			</div>
-			<div class="row">
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+				<p><%= prod.productFeature1 %></p>
 			</div>
 			
 			<div class="row">
-				<h5>Feature 3</h5>
+				<h5><%= prod.productHeader2 %></h5>
 			</div>
 			<div class="row">
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+				<p><%= prod.productFeature2 %></p>
+			</div>
+			
+			<div class="row">
+				<h5><%= prod.productHeader3 %></h5>
+			</div>
+			<div class="row">
+				<p><%= prod.productFeature3 %></p>
 			</div>
 		</div>
 		<div class="jumbotron jumbotron-fluid">
@@ -112,16 +120,16 @@
 				<p class="os-fa">Operating Systems: </p>
 				<i class="fab fa-windows os-fa"></i>
 				<i class="fab fa-apple os-fa"></i>
-				<i class="fab fa-linux os-fa"></i>
+				<i class="fab fa-linux os-fa"></i> 
 			</div>
 			<div class="row">
 				<p class="os-fa">System Requirements: </p>
 			</div>
 			<div class="row">
-				<span><b>RAM:</b> 2 GB</span>
+				<span><b>RAM:</b> <%= prod.productRam%></span>
 			</div>
 			<div class="row">
-				<span><b>Hard Drive Space:</b> 10 GB</span>
+				<span><b>Hard Drive Space:</b> <%= prod.productHdd%></span>
 			</div>
 		  </div>
 		</div>

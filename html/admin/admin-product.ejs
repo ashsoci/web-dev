@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+	<header>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+        <title>Admin</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="./css/admin.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	</header>
+	
+	<body>
+		<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+            <a class="navbar-brand" href="#">Logo</a>
+            
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="#">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../../products">Products</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact Us</a>
+                </li>
+            </ul>
+            
+            <ul class="navbar-nav">
+                <li class="nav-item ">
+                    <a class="nav-link active">Admin</a>
+                </li>
+            </ul>
+        </nav>
+		
+		<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+			<a class="navbar-brand" href="#">Admin Pages</a>
+		
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                <a class="nav-link" href="/admin/admin-homepage">Homepage</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="/admin/admin-about">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/admin-products">Products</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/admin-contact">Contact Us</a>
+                </li>
+            </ul>
+        </nav>
+		
+		<div class="container">
+		  <form id="product-form" name="contact" method="post" onsubmit="submitProductForm()" role="form">
+			<div class="form-group">
+			  <label for="name" hidden>Product ID:</label>
+			  <input type="text" class="form-control" id="id" name="id" value="<%= prod.id %>" disabled hidden>
+			</div>
+			<div class="form-group">
+			  <label for="name">Product Name:</label>
+			  <input type="text" class="form-control" id="name" name="name" value="<%= prod.title %>">
+			</div>
+			<div class="form-group">
+			  <label for="thumbnail-name">Thumbnail Image Filename:</label>
+			  <input type="text" class="form-control" id="thumbnail-name" name="thumbnail-name" value="<%= prod.pathToImg %>">
+			</div>
+			<div class="form-group">
+			  <label for="banner-name">Banner Image Filename:</label>
+			  <input type="text" class="form-control" id="banner-name" name="banner-name" value="<%= prod.productBanner %>">
+			</div>
+			<div class="form-group">
+			  <label for="slide-1-name">Slide 1 Image Filename:</label>
+			  <input type="text" class="form-control" id="slide-1-name" name="slide-1-name" value="<%= prod.productSlide1 %>">
+			</div>
+			<div class="form-group">
+			  <label for="slide-2-name">Slide 2 Image Filename:</label>
+			  <input type="text" class="form-control" id="slide-2-name" name="slide-2-name" value="<%= prod.productSlide2 %>">
+			</div>
+			<div class="form-group">
+			  <label for="slide-3-name">Slide 3 Image Filename:</label>
+			  <input type="text" class="form-control" id="slide-3-name" name="slide-3-name" value="<%= prod.productSlide3 %>">
+			</div>
+			<div class="form-group">
+			  <label for="slide-4-name">Slide 4 Image Filename:</label>
+			  <input type="text" class="form-control" id="slide-4-name" name="slide-4-name" value="<%= prod.productSlide4 %>">
+			</div>
+			<div class="form-group">
+			  <label for="slide-5-name">Slide 5 Image Filename:</label>
+			  <input type="text" class="form-control" id="slide-5-name" name="slide-5-name" value="<%= prod.productSlide5 %>">
+			</div>
+			<div class="form-group">
+			  <label for="headline-1">Headline 1:</label>
+			  <input type="text" class="form-control" id="headline-1" name="headline-1" value="<%= prod.productHeader1 %>">
+			</div>
+			<div class="form-group">
+			  <label for="paragraph-1">Paragraph 1:</label>
+			  <textarea class="form-control" rows="5" id="paragraph-1"><%= prod.productFeature1 %></textarea>
+			</div>
+			<div class="form-group">
+			  <label for="headline-2">Headline 2:</label>
+			  <input type="text" class="form-control" id="headline-2" name="headline-2" value="<%= prod.productHeader2 %>">
+			</div>
+			<div class="form-group">
+			  <label for="paragraph-2">Paragraph 2:</label>
+			  <textarea class="form-control" rows="5" id="paragraph-2"><%= prod.productFeature2 %></textarea>
+			</div>
+			<div class="form-group">
+			  <label for="headline-3">Headline 3:</label>
+			  <input type="text" class="form-control" id="headline-3" name="headline-3" value="<%= prod.productHeader3 %>">
+			</div>
+			<div class="form-group">
+			  <label for="paragraph-3">Paragraph 3:</label>
+			  <textarea class="form-control" rows="5" id="paragraph-3"><%= prod.productFeature3 %></textarea>
+			</div>
+			
+			<div class="form-group">
+			  <label for="ram">RAM:</label>
+			  <input type="text" class="form-control" id="ram" name="ram" value="<%= prod.productRam %>">
+			</div>
+			<div class="form-group">
+			  <label for="hdd">HDD Space:</label>
+			  <input type="text" class="form-control" id="hdd" name="hdd" value="<%= prod.productHdd %>">
+			</div>
+			
+			<div class="form-check-inline">
+			  <label class="form-check-label">
+				<input type="checkbox" class="form-check-input" id="windows" <%= prod.windows == 1 ? "checked" : "" %>>Windows
+			  </label>
+			</div>
+			<div class="form-check-inline">
+			  <label class="form-check-label">
+				<input type="checkbox" class="form-check-input" id="mac"<%= prod.mac == 1 ? "checked" : "" %> >Mac
+			  </label>
+			</div>
+			<div class="form-check-inline">
+			  <label class="form-check-label">
+				<input type="checkbox" class="form-check-input" id="linux" <%= prod.linux == 1 ? "checked" : "" %>>Linux
+			  </label>
+			  
+			</div>
+			<br><br>
+			<label class="form-check-label">
+				<input type="checkbox" class="form-check-input" id="published" <%= prod.published == 1 ? "checked" : "" %>>Published
+			  </label>
+			
+			<br><br>
+			<button style="margin-bottom: 20px" type="submit" class="btn btn-primary">Publish</button>
+			<label id="success" style="color:green" hidden>Successfully Saved - published pages may take a few minutes to appear</label>
+		  </form>
+		</div>
+		<script src="../../js/admin.js"></script>
+	</body>
+</html>
