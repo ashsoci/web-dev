@@ -19,10 +19,10 @@
                 <a class="nav-link" href="/">Home</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="#">About Us</a>
+                <a class="nav-link" href="../../about">About Us</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="products">Products</a>
+                    <a class="nav-link" href="../../products">Products</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Contact Us</a>
@@ -53,6 +53,78 @@
                     <a class="nav-link" href="/admin/admin-contact">Contact Us</a>
                 </li>
             </ul>
+			
+			<ul class="navbar-nav">
+                <li class="nav-item ">
+                    <a class="nav-link" href="/logout">Logout</a>
+                </li>
+            </ul>
         </nav>
+		
+		<div class="container">
+		  <form id="homepage-form" name="contact" method="post" onsubmit="submitHomepageForm()" role="form">
+			<div class="form-group">
+			  <label for="name">Logo:</label>
+			  <input type="text" class="form-control" id="logo" name="logo" value="<%= homepage[0].logo %>">
+			</div>
+			<div class="form-group">
+			  <label for="thumbnail-name">Slide 1 Image URL:</label>
+			  <input type="text" class="form-control" id="slide1" name="slide1" value="<%= homepage[0].slide1 %>">
+			</div>
+			<div class="form-group">
+			  <label for="banner-name">Slide 2 Image URL:</label>
+			  <input type="text" class="form-control" id="slide2" name="slide2" value="<%= homepage[0].slide2 %>">
+			</div>
+			<div class="form-group">
+			  <label for="banner-name">Slide 3 Image URL:</label>
+			  <input type="text" class="form-control" id="slide3" name="slide3" value="<%= homepage[0].slide3 %>">
+			</div>
+			<div class="form-group">
+			  <label for="banner-name">Slide 4 Image URL:</label>
+			  <input type="text" class="form-control" id="slide4" name="slide4" value="<%= homepage[0].slide4 %>">
+			</div>
+			<div class="form-group">
+			  <label for="banner-name">Slide 5 Image URL:</label>
+			  <input type="text" class="form-control" id="slide5" name="slide5" value="<%= homepage[0].slide5 %>">
+			</div>
+			<div class="form-group">
+			  <label for="banner-name">Jumbotron Title:</label>
+			  <input type="text" class="form-control" id="jumbo-title" name="jumbo-title" value="<%= homepage[0].jumbotitle %>">
+			</div>
+			<div class="form-group">
+			  <label for="banner-name">Jumbotron Text:</label>
+			  <input type="text" class="form-control" id="jumbo-text" name="jumbo-text" value="<%= homepage[0].jumbotext %>">
+			</div>
+			<div class="form-group">
+			  <label for="banner-name">Column 1 Title:</label>
+			  <input type="text" class="form-control" id="tri-title1" name="tri-title1" value="<%= homepage[0].trititle1 %>">
+			</div>
+			<div class="form-group">
+			  <label for="banner-name">Column 2 Title:</label>
+			  <input type="text" class="form-control" id="tri-title2" name="tri-title2" value="<%= homepage[0].trititle2 %>">
+			</div>
+			<div class="form-group">
+			  <label for="banner-name">Column 3 Title:</label>
+			  <input type="text" class="form-control" id="tri-title3" name="tri-title3" value="<%= homepage[0].trititle3 %>">
+			</div>
+			<div class="form-group">
+			  <label for="banner-name">Column 1 Text:</label>
+			  <input type="text" class="form-control" id="tri-text1" name="tri-text1" value="<%= homepage[0].tritext1 %>">
+			</div>
+			<div class="form-group">
+			  <label for="banner-name">Column 2 Text:</label>
+			  <input type="text" class="form-control" id="tri-text2" name="tri-text2" value="<%= homepage[0].tritext2 %>">
+			</div>
+			<div class="form-group">
+			  <label for="banner-name">Column 3 Text:</label>
+			  <input type="text" class="form-control" id="tri-text3" name="tri-text3" value="<%= homepage[0].tritext3 %>">
+			</div>
+			
+			<br><br>
+			<button style="margin-bottom: 20px" type="submit" class="btn btn-primary">Publish</button>
+			<label id="success" style="color:green" hidden>Successfully Saved - published pages may take a few minutes to appear</label>
+		  </form>
+		</div>
+		<script src="../../js/admin.js"></script>
 	</body>
 </html>
