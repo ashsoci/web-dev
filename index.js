@@ -2,11 +2,16 @@
 var express = require('express');
 var parser = require('body-parser');
 var mysql = require('mysql');
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
 
 //create an express app
 var app = express();
 
 var ejs = require('ejs');
+
+app.use(cookieParser());
+app.use(session({secret: "Your secret key"}));
 
 app.use(parser.json());
 app.use(parser.urlencoded());
@@ -40,17 +45,16 @@ const con = mysql.createPool({
 });*/
 
 var products = getProducts();
-
+var team = getTeam();
+var homepage = getHomepage();
 
 
 //add a callback function to handle 
 //get request on the root
 app.get('/', function(req, res) {  
-    //res.sendFile(path.join(__dirname+'/html/home.ejs'));
 	let data = {
-		
+		homepage
 	}
-	
 	products = getProducts();
 	
 	ejs.renderFile('./html/home.ejs', data, null, function(err, str){
@@ -58,22 +62,46 @@ app.get('/', function(req, res) {
 	})
 });
 
+app.get('/about', function(req, res) {  
+	let data = {
+		team,
+		homepage
+	}
+	console.log(team);
+	
+	team = getTeam();
+	
+	
+	
+	ejs.renderFile('./html/about.ejs', data, null, function(err, str){
+		res.send(str);
+	})
+});
+
 app.get('/admin', function(req, res) {  
     //res.sendFile(path.join(__dirname+'/html/admin.ejs'));
 	
-	let data = {
+	if(req.session.user)
+	{
+		let data = {
+			
+		}
 		
+		ejs.renderFile('./html/admin.ejs', data, null, function(err, str){
+			res.send(str);
+		})
 	}
-	
-	ejs.renderFile('./html/admin.ejs', data, null, function(err, str){
-		res.send(str);
-	})
+    else
+	{
+        res.redirect('/login')
+    }
 });
 
 app.get('/products', async function(req, res) {  
 	
 	let data = {
-		products
+		products,
+		homepage
 	}
 		
 	products = getProducts();
@@ -87,7 +115,6 @@ app.get('/product', function(req, res) {
     //res.sendFile(path.join(__dirname+'/html/admin.ejs'));
 	
 	let data = {
-		
 	}
 	
 	ejs.renderFile('./html/product-old.ejs', data, null, function(err, str){
@@ -120,7 +147,8 @@ app.get('/products/:name', function(req , res){
 	console.log(prod);
 	
 	let data = {
-		prod
+		prod,
+		homepage
 	}
 	
 	products = getProducts();
@@ -130,89 +158,163 @@ app.get('/products/:name', function(req , res){
 	})
 });
 
-
-
-
-
 	/*---Admin---*/
 
 app.get('/admin/admin-homepage', function(req, res) {  
     //res.sendFile(path.join(__dirname+'/html/admin.ejs'));
-	
-	let data = {
+
+	if(req.session.user)
+	{
+        let data = {
+			homepage
+		}
 		
-	}
-	
-	ejs.renderFile('./html/admin/admin-homepage.ejs', data, null, function(err, str){
-		res.send(str);
-	})
+		homepage = getHomepage();
+		
+		ejs.renderFile('./html/admin/admin-homepage.ejs', data, null, function(err, str){
+			res.send(str);
+		})
+    }
+    else
+	{
+        res.redirect('/login')
+    }
 });
 
 app.get('/admin/admin-about', function(req, res) {  
     //res.sendFile(path.join(__dirname+'/html/admin.ejs'));
-	
-	let data = {
+	if(req.session.user)
+	{
+		let data = {
+			team
+		}
 		
+		ejs.renderFile('./html/admin/admin-about.ejs', data, null, function(err, str){
+			res.send(str);
+		})
 	}
-	
-	ejs.renderFile('./html/admin/admin-about.ejs', data, null, function(err, str){
-		res.send(str);
-	})
+    else
+	{
+        res.redirect('/login')
+    }
 });
 
 app.get('/admin/admin-products', function(req, res) {  
     //res.sendFile(path.join(__dirname+'/html/admin.ejs'));
-	
-	let data = {
-		products
+	if(req.session.user)
+	{
+		let data = {
+			products
+		}
+		
+		ejs.renderFile('./html/admin/admin-products.ejs', data, null, function(err, str){
+			res.send(str);
+		})
 	}
-	
-	ejs.renderFile('./html/admin/admin-products.ejs', data, null, function(err, str){
-		res.send(str);
-	})
+    else
+	{
+        res.redirect('/login')
+    }
 });
 
 app.get('/admin/admin-contact', function(req, res) {  
     //res.sendFile(path.join(__dirname+'/html/admin.ejs'));
-	
-	let data = {
+	if(req.session.user)
+	{
+		let data = {
+			
+		}
 		
+		ejs.renderFile('./html/admin/admin-contact.ejs', data, null, function(err, str){
+			res.send(str);
+		})
 	}
-	
-	ejs.renderFile('./html/admin/admin-contact.ejs', data, null, function(err, str){
-		res.send(str);
-	})
+    else
+	{
+        res.redirect('/login')
+    }
 });
 
 app.get('/admin/admin-products/:name', function(req , res){
-	
-	console.log(req.params.name);
-	
-	var prod = [];
-	
-	for(var p in products)
+	if(req.session.user)
 	{
-		console.log("Checking", products[p].title, "with", req.params.name)
+		console.log(req.params.name);
 		
-		if (products[p].title == req.params.name)
+		var prod = [];
+		
+		for(var p in products)
 		{
-			prod = products[p];
-			break;
+			console.log("Checking", products[p].title, "with", req.params.name)
+			
+			if (products[p].title == req.params.name)
+			{
+				prod = products[p];
+				break;
+			}
 		}
-	}
-	
-	console.log(prod);
-	
-	let data = {
-		prod
-	}
-	
-	products = getProducts();
 		
-	ejs.renderFile('./html/admin/admin-product.ejs', data, null, function(err, str){
-		res.send(str);
-	})
+		console.log(prod);
+		
+		let data = {
+			prod
+		}
+		
+		products = getProducts();
+			
+		ejs.renderFile('./html/admin/admin-product.ejs', data, null, function(err, str){
+			res.send(str);
+		})
+	}
+    else
+	{
+        res.redirect('/login')
+    }
 });
+
+app.get('/admin/admin-about/:name', function(req , res){
+	if(req.session.user)
+	{
+		console.log(req.params.name);
+		
+		var te = [];
+		
+		for(var t in team)
+		{
+			console.log("Checking", team[t].name, "with", req.params.name)
+			
+			if (team[t].name == req.params.name)
+			{
+				te = team[t];
+				break;
+			}
+		}
+		
+		console.log(te);
+		
+		let data = {
+			te
+		}
+		
+		team = getTeam();
+			
+		ejs.renderFile('./html/admin/admin-team.ejs', data, null, function(err, str){
+			res.send(str);
+		})
+	}
+    else
+	{
+        res.redirect('/login')
+    }
+});
+
+function updateDatabases()
+{
+	products = getProducts();
+	team = getTeam();
+	homepage = getHomepage();
+    setTimeout(updateDatabases, 3000);
+}
+updateDatabases();
 
 /*---Form Receiving Functions---*/
 app.post('/update-product', function(req, res){
@@ -225,26 +327,136 @@ app.post('/update-product', function(req, res){
             //result(null, err);
         }
         else {   
-            //result(null, res);
+            products = getProducts();
 			        }
 	}); //INSERT REQ.BODY DATA
+	
+	products = getProducts();
+	
 	res.status(201);
-	res.end(JSON.stringify({message:"we recieved your message"}));
+	res.end(JSON.stringify({message:"Product Updated"}));
 });
 
-/*function pushChanges(id, )
-{
+app.post('/update-team', function(req, res){
+	console.log("Posted");
+	console.log(req.body);
 	
-}*/
+	con.query("UPDATE team SET name = ?, bio = ?, photo = ? WHERE teamID = ?", [req.body.name, req.body.bio, req.body.photo, req.body.id], function(err, res) {
+		if(err) {
+            console.log("error: ", err);
+            //result(null, err);
+        }
+        else {   
+            team = getTeam();
+			        }
+	}); //INSERT REQ.BODY DATA
+	
+	team = getTeam();
+	
+	res.status(201);
+	res.end(JSON.stringify({message:"Team Member Updated"}));
+});
 
-function convertToUpdate(table, body)
-{
-	var updateQuery = "UPDATE "+ table + " SET ";
-	for(var dat in body)
-	{
-		//updateQuery += dat
-	}
-}
+app.post('/update-homepage', function(req, res){
+	console.log("Posted");
+	console.log(req.body);
+	
+	con.query("UPDATE homepage SET logo = ?, slide1 = ?, slide2 = ?, slide3 = ?, slide4 = ?, slide5 = ?, jumbotitle = ?, jumbotext = ?, trititle1 = ?, trititle2 = ?, trititle3 = ?, tritext1 = ?, tritext2 = ?, tritext3 = ?", [req.body.logo, req.body.slide1, req.body.slide2, req.body.slide3, req.body.slide4, req.body.slide5, req.body.jumbotitle, req.body.jumbotext, req.body.trititle1, req.body.trititle2, req.body.trititle3, req.body.tritext1, req.body.tritext2, req.body.tritext3], function(err, res) {
+		if(err) {
+            console.log("error: ", err);
+            //result(null, err);
+        }
+        else {   
+            team = getTeam();
+			        }
+	}); //INSERT REQ.BODY DATA
+	
+	homepage = getHomepage();
+	
+	res.status(201);
+	res.end(JSON.stringify({message:"Homepage Updated"}));
+});
+
+app.post('/create-product', function(req, res){
+	console.log("Creating");
+	
+	con.query("INSERT INTO products(name) VALUES ('New Product')", function(err, res) {
+		if(err) {
+            console.log("error: ", err);
+            //result(null, err);
+        }
+        else {   
+            //result(null, res);
+			        }
+	});
+	
+	products = getProducts();
+	
+	res.status(201);
+	res.end(JSON.stringify({message:"Product Created"}));
+});
+
+app.post('/create-team', function(req, res){
+	console.log("Creating");
+	
+	con.query("INSERT INTO team(name) VALUES ('New Team Member')", function(err, res) {
+		if(err) {
+            console.log("error: ", err);
+            //result(null, err);
+        }
+        else {   
+            //result(null, res);
+			        }
+	});
+	
+	team = getTeam();
+	
+	res.status(201);
+	res.end(JSON.stringify({message:"Team Member Created"}));
+});
+
+app.get('/login', function (req,res){
+
+    res.sendFile(path.join(__dirname+'/html/login.html'))
+});
+
+app.post('/authenticate', function(req, res){
+
+    console.log(req.body)
+    let loginData = {
+        username : req.body.username,
+        password : req.body.password
+    }
+
+    con.query('SELECT * FROM users WHERE username = \'' + loginData.username + '\' AND password = \'' + loginData.password + '\'' , function (err, result) {
+
+        if(err){
+			console.log(err);
+        }
+        else{
+            if(result && result.length > 0)
+			{
+				console.log("Got result");
+                req.session.user = result[0];
+                res.redirect('/admin');
+            }
+            else
+            {
+				console.log("Bad login");
+                res.redirect('/login');
+            }
+        }
+    })
+
+});
+
+app.get('/logout', function (req,res){
+
+    req.session.user = undefined;
+
+    res.redirect('/');
+
+})
 
 function getProducts()
 {
@@ -280,6 +492,53 @@ function getProducts()
 	});
 	
 	return prodList;
+}
+
+function getTeam()
+{
+	var teamList = []
+	con.query("SELECT * FROM team", function (err, result, fields) {
+		for (var i in result) 
+		{
+			teamList.push({
+				id:result[i].teamID,
+				name:result[i].name,
+				bio:result[i].bio,
+				photo:result[i].photo
+			})
+		}
+	});
+	
+	return teamList;
+}
+
+function getHomepage()
+{
+	var hp = []
+	con.query("SELECT * FROM homepage", function (err, result, fields) {
+				
+		for (var i in result) 
+		{
+			hp.push({
+				logo:result[i].logo,
+				slide1:result[i].slide1,
+				slide2:result[i].slide2,
+				slide3:result[i].slide3,
+				slide4:result[i].slide4,
+				slide5:result[i].slide5,
+				jumbotitle:result[i].jumbotitle,
+				jumbotext:result[i].jumbotext,
+				trititle1:result[i].trititle1,
+				trititle2:result[i].trititle2,
+				trititle3:result[i].trititle3,
+				tritext1:result[i].tritext1,
+				tritext2:result[i].tritext2,
+				tritext3:result[i].tritext3
+			})
+		}
+	});
+	
+	return hp;
 }
 
 var port = process.env.PORT || 3000;
