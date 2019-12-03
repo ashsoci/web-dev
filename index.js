@@ -32,7 +32,7 @@ port: 3306
 connection.on('error', connectDb());*/
 
 const con = mysql.createPool({
-	host: "remotemysql.comr",
+	host: "remotemysql.com",
 	user: "DBup3IIEtj",
 	password: "DFMEGHwP81",
 	database: "DBup3IIEtj",
@@ -427,6 +427,26 @@ app.post('/delete-team', function(req, res){
 	
 	res.status(201);
 	res.end(JSON.stringify({message:"Team Member Deleted"}));
+});
+
+app.post('/delete-product', function(req, res){
+	console.log("Posted");
+	console.log(req.body);
+	
+	con.query("DELETE FROM products WHERE productID = ?", [req.body.id], function(err, res) {
+		if(err) {
+            console.log("error: ", err);
+            //result(null, err);
+        }
+        else {   
+            products = getProducts();
+			        }
+	});
+	
+	products = getProducts();
+	
+	res.status(201);
+	res.end(JSON.stringify({message:"Product Deleted"}));
 });
 
 app.post('/update-homepage', function(req, res){
