@@ -74,7 +74,45 @@ function submitTeamForm()
 	
 	ajax.open('post', '/update-team');
 	ajax.setRequestHeader("Content-Type", "application/json");
-	ajax.send(JSON.stringify(formData)); 
+	ajax.send(JSON.stringify(formData));
+}
+
+function deleteTeamMember()
+{
+	event.preventDefault();
+	var team = document.getElementById('team-form');
+
+	var formData = 
+	{
+		id: team.elements.namedItem('id').value,
+		name: team.elements.namedItem('name').value,
+		bio: team.elements.namedItem('bio').value,
+		photo: team.elements.namedItem('photo').value
+	}
+	
+	var ajax = new XMLHttpRequest();
+	
+	ajax.onreadystatechange = function() {
+		console.log(this);
+		console.log(this.status);
+		if (this.readyState == 4 && this.status == 201) {
+			var data = JSON.parse(this.responseText);
+			console.log("success");
+
+			var but = document.getElementById("teamDeleteButton");
+			but.setAttribute("disabled", "true");
+			but.innerHTML = "Deleting...";
+			
+			setTimeout(function() 
+			{
+				window.location.href = "/admin/admin-about";
+			}, 5000);
+		}
+	};
+	
+	ajax.open('post', '/delete-team');
+	ajax.setRequestHeader("Content-Type", "application/json");
+	ajax.send(JSON.stringify(formData));
 }
 
 function submitProductForm()

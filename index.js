@@ -47,6 +47,7 @@ const con = mysql.createPool({
 var products = getProducts();
 var team = getTeam();
 var homepage = getHomepage();
+var messages = getMessages();
 
 
 //add a callback function to handle 
@@ -79,12 +80,11 @@ app.get('/about', function(req, res) {
 });
 
 app.get('/admin', function(req, res) {  
-    //res.sendFile(path.join(__dirname+'/html/admin.ejs'));
 	
 	if(req.session.user)
 	{
 		let data = {
-			
+			homepage
 		}
 		
 		ejs.renderFile('./html/admin.ejs', data, null, function(err, str){
@@ -112,7 +112,6 @@ app.get('/products', async function(req, res) {
 });
 
 app.get('/product', function(req, res) {  
-    //res.sendFile(path.join(__dirname+'/html/admin.ejs'));
 	
 	let data = {
 	}
@@ -158,10 +157,20 @@ app.get('/products/:name', function(req , res){
 	})
 });
 
+app.get('/contact', function(req, res) {  
+	
+	let data = {
+		homepage
+	}
+	
+	ejs.renderFile('./html/contact.ejs', data, null, function(err, str){
+		res.send(str);
+	})
+});
+
 	/*---Admin---*/
 
 app.get('/admin/admin-homepage', function(req, res) {  
-    //res.sendFile(path.join(__dirname+'/html/admin.ejs'));
 
 	if(req.session.user)
 	{
@@ -182,11 +191,12 @@ app.get('/admin/admin-homepage', function(req, res) {
 });
 
 app.get('/admin/admin-about', function(req, res) {  
-    //res.sendFile(path.join(__dirname+'/html/admin.ejs'));
+
 	if(req.session.user)
 	{
 		let data = {
-			team
+			team,
+			homepage
 		}
 		
 		ejs.renderFile('./html/admin/admin-about.ejs', data, null, function(err, str){
@@ -200,11 +210,12 @@ app.get('/admin/admin-about', function(req, res) {
 });
 
 app.get('/admin/admin-products', function(req, res) {  
-    //res.sendFile(path.join(__dirname+'/html/admin.ejs'));
+
 	if(req.session.user)
 	{
 		let data = {
-			products
+			products,
+			homepage
 		}
 		
 		ejs.renderFile('./html/admin/admin-products.ejs', data, null, function(err, str){
@@ -218,14 +229,52 @@ app.get('/admin/admin-products', function(req, res) {
 });
 
 app.get('/admin/admin-contact', function(req, res) {  
-    //res.sendFile(path.join(__dirname+'/html/admin.ejs'));
+
 	if(req.session.user)
 	{
 		let data = {
-			
+			messages,
+			homepage
 		}
 		
 		ejs.renderFile('./html/admin/admin-contact.ejs', data, null, function(err, str){
+			res.send(str);
+		})
+	}
+    else
+	{
+        res.redirect('/login')
+    }
+});
+
+app.get('/admin/admin-contact/:id', function(req , res){
+	if(req.session.user)
+	{
+		console.log(req.params.id);
+		
+		var message = [];
+		
+		for(var m in messages)
+		{
+			console.log("Checking", messages[m].id, "with", req.params.id)
+			
+			if (messages[m].id == req.params.id)
+			{
+				message = messages[m];
+				break;
+			}
+		}
+		
+		console.log(message);
+		
+		let data = {
+			message,
+			homepage
+		}
+		
+		messages = getMessages();
+			
+		ejs.renderFile('./html/admin/admin-contact-message-details.ejs', data, null, function(err, str){
 			res.send(str);
 		})
 	}
@@ -256,7 +305,8 @@ app.get('/admin/admin-products/:name', function(req , res){
 		console.log(prod);
 		
 		let data = {
-			prod
+			prod,
+			homepage
 		}
 		
 		products = getProducts();
@@ -292,7 +342,8 @@ app.get('/admin/admin-about/:name', function(req , res){
 		console.log(te);
 		
 		let data = {
-			te
+			te,
+			homepage
 		}
 		
 		team = getTeam();
@@ -312,7 +363,8 @@ function updateDatabases()
 	products = getProducts();
 	team = getTeam();
 	homepage = getHomepage();
-    setTimeout(updateDatabases, 3000);
+	messages = getMessages();
+    setTimeout(updateDatabases, 5000);
 }
 updateDatabases();
 
@@ -329,7 +381,7 @@ app.post('/update-product', function(req, res){
         else {   
             products = getProducts();
 			        }
-	}); //INSERT REQ.BODY DATA
+	});
 	
 	products = getProducts();
 	
@@ -349,12 +401,32 @@ app.post('/update-team', function(req, res){
         else {   
             team = getTeam();
 			        }
-	}); //INSERT REQ.BODY DATA
+	});
 	
 	team = getTeam();
 	
 	res.status(201);
 	res.end(JSON.stringify({message:"Team Member Updated"}));
+});
+
+app.post('/delete-team', function(req, res){
+	console.log("Posted");
+	console.log(req.body);
+	
+	con.query("DELETE FROM team WHERE teamID = ?", [req.body.id], function(err, res) {
+		if(err) {
+            console.log("error: ", err);
+            //result(null, err);
+        }
+        else {   
+            team = getTeam();
+			        }
+	});
+	
+	team = getTeam();
+	
+	res.status(201);
+	res.end(JSON.stringify({message:"Team Member Deleted"}));
 });
 
 app.post('/update-homepage', function(req, res){
@@ -369,7 +441,7 @@ app.post('/update-homepage', function(req, res){
         else {   
             team = getTeam();
 			        }
-	}); //INSERT REQ.BODY DATA
+	});
 	
 	homepage = getHomepage();
 	
@@ -381,6 +453,25 @@ app.post('/create-product', function(req, res){
 	console.log("Creating");
 	
 	con.query("INSERT INTO products(name) VALUES ('New Product')", function(err, res) {
+		if(err) {
+            console.log("error: ", err);
+            //result(null, err);
+        }
+        else {   
+            //result(null, res);
+			        }
+	});
+	
+	products = getProducts();
+	
+	res.status(201);
+	res.end(JSON.stringify({message:"Product Created"}));
+});
+
+app.post('/submit-contact', function(req, res){
+	console.log("Creating");
+	
+	con.query("INSERT INTO messages(firstname, surname, email, subject, message) VALUES (?, ?, ?, ?, ?)", [req.body.firstname, req.body.surname, req.body.email, req.body.subject, req.body.message], function(err, res) {
 		if(err) {
             console.log("error: ", err);
             //result(null, err);
@@ -539,6 +630,27 @@ function getHomepage()
 	});
 	
 	return hp;
+}
+
+function getMessages()
+{
+	var mes = []
+	con.query("SELECT * FROM messages", function (err, result, fields) {
+				
+		for (var i in result) 
+		{
+			mes.push({
+				id:result[i].messageID,
+				firstname:result[i].firstname,
+				surname:result[i].surname,
+				email:result[i].email,
+				subject:result[i].subject,
+				message:result[i].message
+			})
+		}
+	});
+	
+	return mes;
 }
 
 var port = process.env.PORT || 3000;
