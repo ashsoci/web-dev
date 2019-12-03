@@ -53,6 +53,12 @@
                     <a class="nav-link" href="/admin/admin-contact">Contact Us</a>
                 </li>
             </ul>
+			
+			<ul class="navbar-nav">
+                <li class="nav-item ">
+                    <a class="nav-link" href="/logout">Logout</a>
+                </li>
+            </ul>
         </nav>
 		
 		<div class="container">
@@ -152,6 +158,7 @@
 			<button style="margin-bottom: 20px" type="submit" class="btn btn-primary">Publish</button>
 			<label id="success" style="color:green" hidden>Successfully Saved - published pages may take a few minutes to appear</label>
 		  </form>
+		  <button id="productDeleteButton" style="margin-bottom: 20px" type="button" class="btn btn-danger" onclick="deleteProduct()">Delete</button>
 		</div>
 		<script src="../../js/admin.js"></script>
 	</body>
