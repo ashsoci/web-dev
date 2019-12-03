@@ -32,7 +32,7 @@ port: 3306
 connection.on('error', connectDb());*/
 
 const con = mysql.createPool({
-	host: "remotemysql.com",
+	host: "remotemysql.comr",
 	user: "DBup3IIEtj",
 	password: "DFMEGHwP81",
 	database: "DBup3IIEtj",
